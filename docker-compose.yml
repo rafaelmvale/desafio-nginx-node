@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   nginx:
     image: nginx:latest
     ports:
@@ -12,8 +13,10 @@ services:
 
   node_app:
     build: ./node_app
+    container_name: node_app
     volumes:
       - ./node_app:/usr/src/app
+    entrypoint: dockerize -wait tcp://docker-nodejs-mysql-1:3306 -timeout 20s docker-entrypoint.sh
     environment:
       - MYSQL_HOST=mysql
       - MYSQL_USER=root
