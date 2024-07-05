@@ -7,12 +7,15 @@ RUN apt-get update && apt-get install -y wget \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
     
-WORKDIR /usr/src/app
+WORKDIR /usr/src
+
 
 COPY package*.json ./
+
 RUN npm install
 
 COPY . .
 
 EXPOSE 3000
-CMD ["node", "app.js"]
+
+CMD [ "npm", "run", "start" ]

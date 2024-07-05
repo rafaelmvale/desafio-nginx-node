@@ -16,6 +16,13 @@ connection.connect(err => {
     return;
   }
   console.log('Connected to MySQL');
+  connection.query('CREATE TABLE IF NOT EXISTS people (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL)', (err) => {
+    if (err) {
+      console.error('Error creating table:', err);
+      return;
+    }
+    console.log('Table "people" created successfully!');
+  });
 });
 
 app.get('/', (req, res) => {
