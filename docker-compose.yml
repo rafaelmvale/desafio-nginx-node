@@ -9,8 +9,8 @@ services:
       - "3000:3000"
     volumes:
       - ./node_app:/usr/src/node_app
-    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 20s docker-entrypoint.sh
-    command: npm run start
+      # - /usr/src/node_app/node_modules # link simbolico - volume anonimo
+    entrypoint: dockerize -wait tcp://mysql:3306 -timeout 20s sh -c "npm install && npm run start"
     networks: 
       - node-network
     depends_on:
@@ -38,8 +38,7 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=testdb
     
 networks:
